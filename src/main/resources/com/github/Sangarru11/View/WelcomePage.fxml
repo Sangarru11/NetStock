@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="600.0" style="-fx-background-color: fffff;" stylesheets="@css/WelcomePage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.Sangarru11.ViewController.WelcomePageController">
+   <children>
+      <AnchorPane prefHeight="617.0" prefWidth="600.0">
+         <children>
+            <ImageView fitHeight="173.0" fitWidth="191.0" layoutX="214.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/NetStockLogo.png" />
+               </image>
+            </ImageView>
+            <AnchorPane layoutX="67.0" layoutY="173.0" prefHeight="327.0" prefWidth="465.0" styleClass="rounded-pane">
+               <children>
+                  <TextField fx:id="txtUsername" layoutX="182.0" layoutY="103.0" prefHeight="27.0" prefWidth="167.0" promptText="Nombre" styleClass="text-color" text="Santiago">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                     <font>
+                        <Font name="Georgia" size="13.0" />
+                     </font>
+                  </TextField>
+                  <PasswordField fx:id="txtPassword" layoutX="182.0" layoutY="162.0" prefHeight="27.0" prefWidth="167.0" promptText="Contraseña" styleClass="text-color" text="Santiago%5">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                     <font>
+                        <Font name="Georgia" size="13.0" />
+                     </font>
+                  </PasswordField>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="130.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/User.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="130.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/Password.png" />
+                     </image>
+                  </ImageView>
+                  <HBox alignment="CENTER" layoutX="163.0" layoutY="229.0" onMouseClicked="#Login" prefHeight="40.0" prefWidth="139.0" style="-fx-background-color: ffff;" styleClass="rounded-pane">
+                     <children>
+                        <Text fill="#2b5288" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
+                           <font>
+                              <Font name="Georgia Bold" size="16.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </HBox>
+                  <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="197.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/UserLogo.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="WHITE" layoutX="176.0" layoutY="302.0" onMouseClicked="#goToRegister" strokeType="OUTSIDE" strokeWidth="0.0" text="Create and accound" underline="true">
+                     <font>
+                        <Font name="Georgia" size="13.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+               </children></AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

@@ -29,7 +29,7 @@ public class MainController extends Controller implements Initializable {
     }
 
     /**
-     * Método para cargar una vista de FXML.
+     * Metodo para cargar una vista de FXML.
      * @param scenes La escena que se cargará.
      * @return Un objeto View que contiene la escena y su controlador.
      * @throws IOException Si ocurre un error de entrada/salida.
@@ -46,7 +46,7 @@ public class MainController extends Controller implements Initializable {
     }
 
     /**
-     * Método para cambiar la escena actual.
+     * Metodo para cambiar la escena actual.
      * @param scene La nueva escena a la que se cambiará.
      * @param data Los datos que se pasarán a la nueva escena.
      * @throws IOException Si ocurre un error de entrada/salida.
