@@ -29,8 +29,8 @@ public class App extends Application {
         currentController = view.controller;
         currentController.onOpen(null);
         App.stage = stage;
-        stage.setTitle("Huella Carbono");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/org/HuellaCarbono/view/images/HuellaCarbonoLogo.PNG")));
+        stage.setTitle("NetStock");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/github/Sangarru11/View/Images/NetStockLogo1.png")));
         stage.setScene(scene);
         stage.show();
     }

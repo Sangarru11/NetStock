@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">
+            jdbc:mysql://localhost:3306/netstock?useSSL=false&amp;serverTimezone=UTC</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password"></property>
+
+        <!-- JDBC connection pool settings -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- Specify session context -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.format_sql">true</property>
+
+        <mapping class="com.github.Sangarru11.Model.Entity.Categoria"/>
+        <mapping class="com.github.Sangarru11.Model.Entity.Movimiento"/>
+        <mapping class="com.github.Sangarru11.Model.Entity.MovimientoProducto"/>
+        <mapping class="com.github.Sangarru11.Model.Entity.MovimientoProductoId"/>
+        <mapping class="com.github.Sangarru11.Model.Entity.Producto"/>
+        <mapping class="com.github.Sangarru11.Model.Entity.ProductoZona"/>
+        <mapping class="com.github.Sangarru11.Model.Entity.Usuario"/>
+        <mapping class="com.github.Sangarru11.Model.Entity.Zona"/>
+
+    </session-factory>
+</hibernate-configuration>

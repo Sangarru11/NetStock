@@ -1,0 +1,8 @@
+.rounded-pane {
+    -fx-background-color: #2b5288;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+}
+.text-color {
+    -fx-text-fill: #2b5288;
+}
