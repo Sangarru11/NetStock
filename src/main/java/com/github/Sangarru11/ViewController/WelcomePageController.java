@@ -87,9 +87,11 @@ public class WelcomePageController extends Controller implements Initializable {
     public static void changeSceneToMain(Scenes scene, Object data) throws IOException {
         View view = MainController.loadFXML(scene);
         Scene _scene = new Scene(view.scene);
-        App.currentController = view.controller;
-        App.currentController.onOpen(data);
         App.stage.setScene(_scene);
+        App.currentController = view.controller;
+        if (App.currentController != null) {
+            App.currentController.onOpen(data);
+        }
         App.stage.setMaximized(true);
         App.stage.show();
     }

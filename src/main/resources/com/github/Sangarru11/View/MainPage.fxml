@@ -1,14 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.github.Sangarru11.ViewController.MainPageController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="880.0" prefWidth="1700.0" stylesheets="@css/MainPage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.Sangarru11.ViewController.MainPageController">
+   <children>
+      <Text layoutX="791.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STOCK">
+         <font>
+            <Font name="Georgia" size="36.0" />
+         </font>
+      </Text>
+      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="84.0" prefHeight="757.0" prefWidth="207.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="HOME">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="GESTION STOCK">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="AÑADIR STOCK">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVIMIENTOS">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="CATEGORIAS">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="ZONAS">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+      <TableView fx:id="tableView" layoutX="307.0" layoutY="126.0" prefHeight="700.0" prefWidth="1250.0">
+        <columns>
+          <TableColumn fx:id="IdProducto" editable="false" prefWidth="74.66665649414062" sortable="false" text="Id_Producto" />
+          <TableColumn fx:id="NombreProducto" editable="false" prefWidth="96.0" sortable="false" text="Nombre" />
+            <TableColumn fx:id="DescripcionProducto" editable="false" prefWidth="389.3332824707031" sortable="false" text="Descripcion" />
+            <TableColumn fx:id="CategoriaProducto" editable="false" prefWidth="120.66668701171875" sortable="false" text="Categoria" />
+            <TableColumn fx:id="CantidadProducto" editable="false" prefWidth="122.6666259765625" sortable="false" text="Cantidad Disponible" />
+            <TableColumn fx:id="ZonaProducto" editable="false" prefWidth="170.6666259765625" sortable="false" text="Zona" />
+            <TableColumn fx:id="CodigoInternoProducto" editable="false" prefWidth="276.0" sortable="false" text="Codigo Interno" />
+        </columns>
+      </TableView>
+   </children>
 </AnchorPane>
