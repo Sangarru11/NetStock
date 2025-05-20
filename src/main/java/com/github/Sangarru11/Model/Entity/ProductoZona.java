@@ -1,13 +1,17 @@
 package com.github.Sangarru11.Model.Entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "producto_zona", schema = "netstock")
 public class ProductoZona {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_ProductoZona", nullable = false)
+    private Integer idProductoZona;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_producto")
@@ -18,11 +22,13 @@ public class ProductoZona {
     @JoinColumn(name = "id_zona")
     private Zona idZona;
 
-    @ColumnDefault("0")
-    @Column(name = "cantidad")
-    private Integer cantidad;
-    @Id
-    private Long id;
+    public Integer getId() {
+        return idProductoZona;
+    }
+
+    public void setId(Integer id) {
+        this.idProductoZona = id;
+    }
 
     public Producto getIdProducto() {
         return idProducto;
@@ -40,19 +46,4 @@ public class ProductoZona {
         this.idZona = idZona;
     }
 
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }

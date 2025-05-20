@@ -68,7 +68,12 @@ public class ProductoDAO implements DAO<Producto, Integer> {
     public List<Producto> findAll() {
         Session ss = sF.openSession();
         ss.beginTransaction();
-        List<Producto> productos = ss.createQuery("from Producto a join fetch a.idProducto", Producto.class).list();
+        List<Producto> productos = ss.createQuery(
+            "select distinct p from Producto p " +
+            "left join fetch p.idCategoria " +
+            "left join fetch p.productoZonas z " +
+            "left join fetch z.idZona", Producto.class
+        ).list();
         ss.getTransaction().commit();
         ss.close();
         return productos;
@@ -76,6 +81,10 @@ public class ProductoDAO implements DAO<Producto, Integer> {
 
     @Override
     public void close() throws IOException {
+        sF.close();
+    }
 
+    public static ProductoDAO build(){
+        return new ProductoDAO();
     }
 }
