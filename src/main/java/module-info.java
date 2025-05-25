@@ -6,6 +6,7 @@ module com.github.Sangarru11 {
     requires org.hibernate.orm.core;
     requires java.desktop;
     requires jdk.compiler;
+    requires javafx.swing;
 
     opens com.github.Sangarru11 to javafx.fxml;
     opens com.github.Sangarru11.ViewController to javafx.fxml;

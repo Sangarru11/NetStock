@@ -4,12 +4,17 @@ import com.github.Sangarru11.Model.DAO.ProductoDAO;
 import com.github.Sangarru11.Model.Entity.Producto;
 import com.github.Sangarru11.Model.Entity.ProductoZona;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.util.Callback;
+import javafx.scene.control.TableCell;
 
 
 import java.io.IOException;
@@ -21,7 +26,7 @@ public class MainPageController extends Controller implements Initializable {
     @FXML
     private TableView<Producto> tableView;
     @FXML
-    private TableColumn<Producto, String> IdProducto;
+    private TableColumn<Producto, Image> IdProducto;
     @FXML
     private TableColumn<Producto, String> NombreProducto;
     @FXML
@@ -35,7 +40,7 @@ public class MainPageController extends Controller implements Initializable {
     @FXML
     private TableColumn<Producto, String> CodigoInternoProducto;
 
-    private javafx.collections.ObservableList<Producto> productos;
+    private ObservableList<Producto> productos;
 
     @Override
     public Object onOpen(Object input) throws IOException {
@@ -52,26 +57,33 @@ public class MainPageController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tableView.setEditable(true);
 
-        tableView.setRowFactory(tv -> {
-            TableRow<Producto> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                Producto producto = tableView.getSelectionModel().getSelectedItem();
-                if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                    // Acción al hacer doble clic, por ejemplo mostrar detalles
-                    // showProductoDetails(producto);
-                }
-            });
-            return row;
+        IdProducto.setCellValueFactory(cellData -> {
+            Producto producto = cellData.getValue();
+            if (producto.getFoto() != null) {
+                Image img = new Image(new java.io.ByteArrayInputStream(producto.getFoto()));
+                return new javafx.beans.property.SimpleObjectProperty<>(img);
+            }
+            return new javafx.beans.property.SimpleObjectProperty<>(null);
         });
-
-        IdProducto.setCellValueFactory(cellData ->
-                new javafx.beans.property.SimpleStringProperty(
-                        cellData.getValue().getId() != null ? cellData.getValue().getId().toString() : ""
-                )
-        );
-        IdProducto.setCellFactory(TextFieldTableCell.forTableColumn());
+        IdProducto.setCellFactory(col -> new TableCell<Producto, Image>() {
+            private final ImageView imageView = new ImageView();
+            {
+                imageView.setFitWidth(50);
+                imageView.setFitHeight(50);
+                imageView.setPreserveRatio(true);
+            }
+            @Override
+            protected void updateItem(Image item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    imageView.setImage(item);
+                    setGraphic(imageView);
+                }
+            }
+        });
 
         NombreProducto.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleStringProperty(cellData.getValue().getNombre())
@@ -112,14 +124,13 @@ public class MainPageController extends Controller implements Initializable {
             try {
                 producto.setCantidadDisponible(Integer.parseInt(event.getNewValue()));
             } catch (NumberFormatException e) {
+                // Ignorar error de conversión
             }
         });
 
         ZonaProducto.setCellValueFactory(cellData -> {
             Producto producto = cellData.getValue();
-            // Obtener la primera zona asociada (puedes ajustar esto según tu lógica)
             if (producto.getProductoZonas() != null && !producto.getProductoZonas().isEmpty()) {
-                // Tomar la primera zona
                 ProductoZona productoZona = producto.getProductoZonas().iterator().next();
                 if (productoZona.getIdZona() != null) {
                     return new javafx.beans.property.SimpleStringProperty(productoZona.getIdZona().getNombreZona());
@@ -138,4 +149,33 @@ public class MainPageController extends Controller implements Initializable {
             producto.setCodigoInterno(event.getNewValue());
         });
     }
+    @FXML
+    private void GoToMain() throws IOException {
+        WelcomePageController.changeSceneToMain(Scenes.MainPage, null);
+    }
+    @FXML
+    private void GoToGStock() throws IOException{
+        WelcomePageController.changeSceneToMain(Scenes.GStock, null);
+    }
+    @FXML
+    private void GoToAddStock() throws IOException{
+        WelcomePageController.changeSceneToMain(Scenes.AddStock, null);
+    }
+    @FXML
+    private void GoToMovimientos() throws IOException{
+        WelcomePageController.changeSceneToMain(Scenes.Movimientos, null);
+    }
+    @FXML
+    private void GoToCategorias() throws IOException{
+        WelcomePageController.changeSceneToMain(Scenes.Categorias, null);
+    }
+    @FXML
+    private void GoToZonas() throws IOException{
+        WelcomePageController.changeSceneToMain(Scenes.Zonas, null);
+    }
+    @FXML
+    private void GoToLogin() throws IOException{
+        WelcomePageController.changeSceneToMain(Scenes.WelcomePage, null);
+    }
+
 }

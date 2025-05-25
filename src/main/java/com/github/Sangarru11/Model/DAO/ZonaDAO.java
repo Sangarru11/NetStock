@@ -67,11 +67,12 @@ public class ZonaDAO implements DAO <Zona, Integer>{
     public List<Zona> findAll() {
         Session ss = sF.openSession();
         ss.beginTransaction();
-        List<Zona> zonas = ss.createQuery("from Zona a join fetch a.idZona", Zona.class).list();
+        List<Zona> zonas = ss.createQuery("from Zona", Zona.class).list();
         ss.getTransaction().commit();
         ss.close();
         return zonas;
     }
+
     @Override
     public void close() throws IOException {
         sF.close();

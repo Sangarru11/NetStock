@@ -41,6 +41,18 @@ public class Producto {
     @OneToMany(mappedBy = "idProducto")
     private Set<MovimientoProducto> movimientoProductos = new LinkedHashSet<>();
 
+    @Lob
+    @Column(name = "foto", columnDefinition = "LONGBLOB")
+    private byte[] foto;
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
     @OneToMany(mappedBy = "idProducto")
     private Set<ProductoZona> productoZonas = new LinkedHashSet<>();
 
