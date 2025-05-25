@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="880.0" prefWidth="1700.0" stylesheets="@css/Categorias.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.Sangarru11.ViewController.MovimientosController">
+   <children>
+      <Text layoutX="717.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVIMIENTOS">
+         <font>
+            <Font name="Georgia" size="36.0" />
+         </font>
+      </Text>
+      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="84.0" prefHeight="757.0" prefWidth="207.0">
+         <children>
+            <HBox alignment="CENTER" onMouseClicked="#GoToMain" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="HOME">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#GoToGStock" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="GESTION STOCK">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#GoToAddStock" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="AÑADIR STOCK">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#GoToMovimientos" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVIMIENTOS">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#GoToCategorias" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="CATEGORIAS">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#GoToZonas" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="ZONAS">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+      <TableView fx:id="tableView" layoutX="307.0" layoutY="133.0" prefHeight="700.0" prefWidth="1250.0">
+        <columns>
+          <TableColumn fx:id="IdMovimiento" editable="false" prefWidth="99.33331298828125" sortable="false" text="Id_Movimiento" />
+          <TableColumn fx:id="txtUsuarioResponsable" editable="false" prefWidth="199.99996948242188" sortable="false" text="Usuario Responsable" />
+            <TableColumn fx:id="txtTipoMovimiento" editable="false" prefWidth="396.66668701171875" sortable="false" text="Tipo De Movimiento" />
+            <TableColumn fx:id="txtFechaMovimiento" editable="false" prefWidth="151.99993896484375" sortable="false" text="Fecha" />
+            <TableColumn fx:id="txtObservaciones" editable="false" prefWidth="401.3333740234375" sortable="false" text="Observaciones" />
+        </columns>
+      </TableView>
+      <HBox alignment="CENTER" layoutX="1463.0" layoutY="42.0" onMouseClicked="#GoToCreateMovimiento" prefHeight="43.0" prefWidth="187.0" styleClass="rounded-pane">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Crear Movimiento">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+            </Text>
+         </children>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </HBox>
+   </children>
+</AnchorPane>

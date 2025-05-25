@@ -78,4 +78,8 @@ public class ProductoZonaDAO implements DAO<ProductoZona, Integer> {
     public void close() throws IOException {
         sF.close();
     }
+
+    public static ProductoZonaDAO build(){
+        return new ProductoZonaDAO();
+    }
 }

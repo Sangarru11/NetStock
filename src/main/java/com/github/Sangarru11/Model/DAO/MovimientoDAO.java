@@ -64,15 +64,23 @@ public class MovimientoDAO implements DAO<Movimiento, Integer> {
         return null;
     }
 
-    @Override
-    public List<Movimiento> findAll() {
-        Session ss = sF.openSession();
-        ss.beginTransaction();
-        List<Movimiento> movimientos = ss.createQuery("from Movimiento a join fetch a.idMovimiento", Movimiento.class).list();
-        ss.getTransaction().commit();
-        ss.close();
-        return movimientos;
-    }
+   @Override
+   public List<Movimiento> findAll() {
+       Session ss = sF.openSession();
+       ss.beginTransaction();
+       List<Movimiento> movimientos = ss.createQuery(
+           "select distinct m from Movimiento m " +
+           "left join fetch m.idUsuario " +
+           "left join fetch m.movimientoProductos mp " +
+           "left join fetch mp.idProducto p " +
+           "left join fetch p.idCategoria " +
+           "left join fetch p.productoZonas pz " +
+           "left join fetch pz.idZona", Movimiento.class
+       ).list();
+       ss.getTransaction().commit();
+       ss.close();
+       return movimientos;
+   }
 
     @Override
     public void close() throws IOException {

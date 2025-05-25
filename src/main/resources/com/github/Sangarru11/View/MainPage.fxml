@@ -19,7 +19,7 @@
       </Text>
       <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="84.0" prefHeight="757.0" prefWidth="207.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+            <HBox alignment="CENTER" onMouseClicked="#GoToMain" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
@@ -34,7 +34,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+            <HBox alignment="CENTER" onMouseClicked="#GoToGStock" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="GESTION STOCK">
                      <font>
@@ -49,7 +49,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+            <HBox alignment="CENTER" onMouseClicked="#GoToAddStock" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="AÑADIR STOCK">
                      <font>
@@ -64,7 +64,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+            <HBox alignment="CENTER" onMouseClicked="#GoToMovimientos" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVIMIENTOS">
                      <font>
@@ -79,7 +79,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+            <HBox alignment="CENTER" onMouseClicked="#GoToCategorias" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="CATEGORIAS">
                      <font>
@@ -94,7 +94,7 @@
                   <Insets left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+            <HBox alignment="CENTER" onMouseClicked="#GoToZonas" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="ZONAS">
                      <font>
@@ -113,7 +113,7 @@
       </VBox>
       <TableView fx:id="tableView" layoutX="307.0" layoutY="126.0" prefHeight="700.0" prefWidth="1250.0">
         <columns>
-          <TableColumn fx:id="IdProducto" editable="false" prefWidth="74.66665649414062" sortable="false" text="Id_Producto" />
+          <TableColumn fx:id="IdProducto" editable="false" prefWidth="74.66665649414062" sortable="false" text="Imagen" />
           <TableColumn fx:id="NombreProducto" editable="false" prefWidth="96.0" sortable="false" text="Nombre" />
             <TableColumn fx:id="DescripcionProducto" editable="false" prefWidth="389.3332824707031" sortable="false" text="Descripcion" />
             <TableColumn fx:id="CategoriaProducto" editable="false" prefWidth="120.66668701171875" sortable="false" text="Categoria" />

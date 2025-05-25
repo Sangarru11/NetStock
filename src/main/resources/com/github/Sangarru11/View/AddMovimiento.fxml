@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@css/AddMovimientos.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.Sangarru11.ViewController.AddMovimientosController">
+   <children>
+      <Text layoutX="347.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nuevo Movimiento">
+         <font>
+            <Font name="Georgia" size="36.0" />
+         </font>
+      </Text>
+      <Text layoutX="115.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo:" wrappingWidth="84.66672261555988">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtNombreCategoria" layoutX="250.0" layoutY="109.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="167.0" />
+      <HBox alignment="CENTER" layoutX="393.0" layoutY="634.0" onMouseClicked="#addMovimiento" prefHeight="43.0" prefWidth="214.0" styleClass="rounded-pane">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Realizar Movimiento">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+      <Text layoutX="15.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Observaciones:" wrappingWidth="150.263671875">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtNombreCategoria1" layoutX="250.0" layoutY="160.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="167.0" />
+      <Text layoutX="137.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productos Disponibles" wrappingWidth="224.00006612141925">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TableView layoutX="14.0" layoutY="288.0" prefHeight="319.0" prefWidth="472.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Imagen" />
+          <TableColumn prefWidth="84.66665649414062" text="Nombre" />
+            <TableColumn prefWidth="188.00001525878906" text="Descripcion" />
+            <TableColumn prefWidth="120.6666259765625" text="Cantidad Disponible" />
+        </columns>
+      </TableView>
+      <Text layoutX="650.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productos Añadidos" wrappingWidth="200.00006612141925">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TableView layoutX="514.0" layoutY="288.0" prefHeight="319.0" prefWidth="472.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="Imagen" />
+            <TableColumn prefWidth="84.66665649414062" text="Nombre" />
+            <TableColumn prefWidth="188.00001525878906" text="Descripcion" />
+            <TableColumn prefWidth="120.6666259765625" text="Cantidad Disponible" />
+         </columns>
+      </TableView>
+      <Text layoutX="537.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destinatario: " wrappingWidth="139.33340962727863">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtNombreCategoria2" layoutX="730.0" layoutY="128.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="167.0" />
+   </children>
+</AnchorPane>

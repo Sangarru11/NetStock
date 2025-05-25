@@ -3,12 +3,14 @@ package com.github.Sangarru11.ViewController;
 public enum Scenes {
     WelcomePage("View/WelcomePage.fxml"),
     RegisterPage("View/RegisterPage.fxml"),
-    sHuellaHabito("View/sHuellaHabito.fxml"),
+    GStock("View/GStock.fxml"),
     MainPage("View/MainPage.fxml"),
-    RegistrarHuella("View/RegistrarHuella.fxml"),
-    RegistrarHabito("View/RegistrarHabito.fxml"),
-    Comparativa("View/Comparativa.fxml"),
-    MainPageHabito("View/MainPageHabito.fxml");
+    AddStock("View/AddStock.fxml"),
+    Movimientos("View/Movimientos.fxml"),
+    Categorias("View/Categorias.fxml"),
+    Zonas("View/Zonas.fxml"),
+    AddMovimiento("View/AddMovimiento.fxml"),
+    AddCategoria("View/AddCategoria.fxml");
 
     private String url;
     Scenes(String url) {

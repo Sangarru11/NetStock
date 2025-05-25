@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="880.0" prefWidth="1700.0" stylesheets="@css/MainPage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.Sangarru11.ViewController.AddStockController">
+   <children>
+      <Text layoutX="715.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AÑADIR STOCK">
+         <font>
+            <Font name="Georgia" size="36.0" />
+         </font>
+      </Text>
+      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="84.0" prefHeight="757.0" prefWidth="207.0">
+         <children>
+            <HBox alignment="CENTER" onMouseClicked="#GoToMain" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="HOME">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#GoToGStock" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="GESTION STOCK">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#GoToAddStock" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="AÑADIR STOCK">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#GoToMovimientos" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="MOVIMIENTOS">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#GoToCategorias" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="CATEGORIAS">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#GoToZonas" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="ZONAS">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+      <Text layoutX="637.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre del Producto" wrappingWidth="214.00002034505206">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtNombreProducto" layoutX="895.0" layoutY="175.0" prefHeight="25.0" prefWidth="167.0" />
+      <Text layoutX="640.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pequeña Descripción" wrappingWidth="207.33333333333331">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtDescripcion" layoutX="895.0" layoutY="235.0" prefHeight="25.0" prefWidth="167.0" />
+      <Text layoutX="752.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categoría" wrappingWidth="94.66670735677081">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="ComboBoxCategoria" layoutX="895.0" layoutY="295.0" prefHeight="40.0" prefWidth="167.0" />
+      <Text layoutX="643.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad Disponible" wrappingWidth="200.000020345052">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <Text layoutX="695.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Codigo Interno" wrappingWidth="149.01367187499994">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtCodigoInterno" layoutX="895.0" layoutY="415.0" prefHeight="25.0" prefWidth="167.0" />
+      <HBox alignment="CENTER" layoutX="799.0" layoutY="557.0" onMouseClicked="#AddImagen" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Añadir Imagen">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+            </Text>
+         </children>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </HBox>
+      <AnchorPane layoutX="1189.0" layoutY="69.0" prefHeight="249.0" prefWidth="236.0" styleClass="rounded-pane">
+         <children>
+            <ImageView fx:id="ImageViewProducto" fitHeight="220.0" fitWidth="200.0" layoutX="18.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </AnchorPane>
+      <HBox alignment="CENTER" layoutX="767.0" layoutY="723.0" onMouseClicked="#addProducto" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Añadir Producto">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+      <Text layoutX="799.0" layoutY="618.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(PNG, JPG, JPEG, GIF y BMP)" wrappingWidth="167.33333333333326">
+         <font>
+            <Font name="Georgia" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="752.0" layoutY="497.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zona" wrappingWidth="94.66670735677081">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="ComboBoxZona" layoutX="895.0" layoutY="469.0" prefHeight="40.0" prefWidth="167.0" />
+      <TextArea fx:id="idCantidadDisponible" layoutX="895.0" layoutY="355.0" prefHeight="25.0" prefWidth="167.0" />
+   </children>
+</AnchorPane>

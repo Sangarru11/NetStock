@@ -34,6 +34,9 @@ public class Movimiento {
     @Column(name = "observaciones")
     private String observaciones;
 
+    @Column(name = "destinatario", nullable = false, length = 50)
+    private String destinatario;
+
     @OneToMany(mappedBy = "idMovimiento")
     private Set<MovimientoProducto> movimientoProductos = new LinkedHashSet<>();
 
@@ -71,6 +74,14 @@ public class Movimiento {
 
     public String getObservaciones() {
         return observaciones;
+    }
+
+    public String getDestinatario() {
+        return destinatario;
+    }
+
+    public void setDestinatario(String destinatario) {
+        this.destinatario = destinatario;
     }
 
     public void setObservaciones(String observaciones) {

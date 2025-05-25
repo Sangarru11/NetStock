@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@css/DetalleMovimientos.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.Sangarru11.ViewController.DetalleMovimientoController">
+   <children>
+      <TableView fx:id="tableView" layoutX="50.0" layoutY="237.0" prefHeight="321.0" prefWidth="900.0">
+        <columns>
+          <TableColumn fx:id="imageTableColumn" editable="false" prefWidth="83.9999771118164" sortable="false" text="Imagen" />
+          <TableColumn fx:id="NombreTableColumn" editable="false" prefWidth="104.66671752929688" sortable="false" text="Nombre" />
+            <TableColumn fx:id="DescripcionTableColumn" editable="false" prefWidth="260.66661071777344" sortable="false" text="Descripcion" />
+            <TableColumn fx:id="CategoriaTableColumn" editable="false" prefWidth="99.33334350585938" sortable="false" text="Categoria" />
+            <TableColumn fx:id="CantidadTableColumn" editable="false" minWidth="0.0" prefWidth="123.33331298828125" sortable="false" text="Cantidad Disponible" />
+            <TableColumn fx:id="ZonaTableColumn" editable="false" minWidth="0.0" prefWidth="73.33331298828125" sortable="false" text="Zona" />
+            <TableColumn fx:id="CodigoInternoTableColumn" editable="false" prefWidth="156.6666259765625" sortable="false" text="Codigo Interno" />
+        </columns>
+      </TableView>
+      <HBox alignment="CENTER" layoutX="50.0" layoutY="36.0" prefHeight="60.0" prefWidth="530.0" styleClass="rounded-pane">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre Movimiento: ">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+            </Text>
+            <Label fx:id="lblNombreMovimiento" prefHeight="34.0" prefWidth="277.0" textFill="WHITE">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <Text layoutX="338.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productos Que Se Han Suministrado">
+         <font>
+            <Font name="Georgia" size="20.0" />
+         </font>
+      </Text>
+      <HBox alignment="CENTER" layoutX="640.0" layoutY="36.0" prefHeight="60.0" prefWidth="345.0" styleClass="rounded-pane">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Destinatario:">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+            </Text>
+            <Label fx:id="lblDestinatario" prefHeight="34.0" prefWidth="204.0" textFill="WHITE">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

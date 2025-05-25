@@ -69,7 +69,7 @@ public class CategoriaDAO implements DAO<Categoria, Integer> {
     public List<Categoria> findAll() {
         Session ss = sF.openSession();
         ss.beginTransaction();
-        List<Categoria> categorias = ss.createQuery("from Categoria a join fetch a.idCategoria", Categoria.class).list();
+        List<Categoria> categorias = ss.createQuery("from Categoria", Categoria.class).list();
         ss.getTransaction().commit();
         ss.close();
         return categorias;
