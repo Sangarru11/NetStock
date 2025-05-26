@@ -93,7 +93,8 @@ public class MovimientosController extends Controller implements Initializable {
             javafx.stage.Stage stage = new javafx.stage.Stage();
             stage.setTitle("Detalle del Movimiento");
             stage.setScene(new javafx.scene.Scene(root));
-            stage.initModality(javafx.stage.Modality.APPLICATION_MODAL); // Opcional: bloquea la ventana principal
+            stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("/com/github/Sangarru11/View/Images/NetStockLogo1.png")));
+            stage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();

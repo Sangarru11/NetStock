@@ -16,9 +16,9 @@
         <columns>
           <TableColumn fx:id="imageTableColumn" editable="false" prefWidth="83.9999771118164" sortable="false" text="Imagen" />
           <TableColumn fx:id="NombreTableColumn" editable="false" prefWidth="104.66671752929688" sortable="false" text="Nombre" />
-            <TableColumn fx:id="DescripcionTableColumn" editable="false" prefWidth="260.66661071777344" sortable="false" text="Descripcion" />
-            <TableColumn fx:id="CategoriaTableColumn" editable="false" prefWidth="99.33334350585938" sortable="false" text="Categoria" />
-            <TableColumn fx:id="CantidadTableColumn" editable="false" minWidth="0.0" prefWidth="123.33331298828125" sortable="false" text="Cantidad Disponible" />
+            <TableColumn fx:id="DescripcionTableColumn" editable="false" prefWidth="248.6666717529297" sortable="false" text="Descripcion" />
+            <TableColumn fx:id="CategoriaTableColumn" editable="false" prefWidth="102.00003051757812" sortable="false" text="Categoria" />
+            <TableColumn fx:id="CantidadTableColumn" editable="false" minWidth="0.0" prefWidth="134.00006103515625" sortable="false" text="Cantidad Suministrada" />
             <TableColumn fx:id="ZonaTableColumn" editable="false" minWidth="0.0" prefWidth="73.33331298828125" sortable="false" text="Zona" />
             <TableColumn fx:id="CodigoInternoTableColumn" editable="false" prefWidth="156.6666259765625" sortable="false" text="Codigo Interno" />
         </columns>
