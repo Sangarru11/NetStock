@@ -59,6 +59,8 @@ public class DetalleMovimientoController extends Controller implements Initializ
                     .collect(Collectors.toList())
             );
             tableView.setItems(productos);
+        } else if (movimiento == null && tableView != null) {
+            tableView.setItems(FXCollections.observableArrayList());
         }
     }
 
@@ -105,11 +107,19 @@ public class DetalleMovimientoController extends Controller implements Initializ
                 return new SimpleStringProperty("");
             }
         });
-        CantidadTableColumn.setCellValueFactory(cellData ->
-            new SimpleStringProperty(
-                cellData.getValue().getCantidadDisponible() != null ? cellData.getValue().getCantidadDisponible().toString() : ""
-            )
-        );
+
+        CantidadTableColumn.setCellValueFactory(cellData -> {
+            Producto productoEnFila = cellData.getValue();
+            if (movimiento != null && movimiento.getMovimientoProductos() != null) {
+                return movimiento.getMovimientoProductos().stream()
+                        .filter(mp -> mp.getIdProducto().equals(productoEnFila))
+                        .findFirst()
+                        .map(mp -> new SimpleStringProperty(mp.getCantidad() != null ? mp.getCantidad().toString() : ""))
+                        .orElse(new SimpleStringProperty(""));
+            }
+            return new SimpleStringProperty("");
+        });
+
         ZonaTableColumn.setCellValueFactory(cellData -> {
             Producto producto = cellData.getValue();
             if (producto.getProductoZonas() != null && !producto.getProductoZonas().isEmpty()) {

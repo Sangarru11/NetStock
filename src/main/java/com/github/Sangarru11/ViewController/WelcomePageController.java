@@ -4,6 +4,7 @@ import com.github.Sangarru11.App;
 import com.github.Sangarru11.Model.DAO.UsuarioDAO;
 import com.github.Sangarru11.Model.Entity.Usuario;
 import com.github.Sangarru11.Utils.HashPassword;
+import com.github.Sangarru11.Utils.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -62,6 +63,8 @@ public class WelcomePageController extends Controller implements Initializable {
             alert.show();
             return;
         }
+
+        SessionManager.setUsuarioLogueado(user);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("¡Bienvenido, " + user.getNombreUsuario() + "!");
