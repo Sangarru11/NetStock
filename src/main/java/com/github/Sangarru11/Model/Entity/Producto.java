@@ -14,10 +14,14 @@ public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_producto", nullable = false)
-    private Integer idProducto;
+    private Integer id;
 
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
+
+    @Lob
+    @Column(name = "foto", columnDefinition="LONGBLOB") // <-- Modifica esta línea
+    private byte[] foto;
 
     @Lob
     @Column(name = "descripcion")
@@ -28,40 +32,33 @@ public class Producto {
     @JoinColumn(name = "id_categoria")
     private Categoria idCategoria;
 
+    @Column(name = "ubicacion", length = 100)
+    private String ubicacion;
+
     @ColumnDefault("0")
     @Column(name = "cantidad_disponible")
     private Integer cantidadDisponible;
 
-    @Column(name = "ubicacion", length = 100)
-    private String ubicacion;
-
     @Column(name = "codigo_interno", length = 50)
     private String codigoInterno;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JoinColumn(name = "id_proveedor")
+    private Proveedor idProveedor;
+
     @OneToMany(mappedBy = "idProducto")
     private Set<MovimientoProducto> movimientoProductos = new LinkedHashSet<>();
-
-    @Lob
-    @Column(name = "foto", columnDefinition = "LONGBLOB")
-    private byte[] foto;
-
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
 
     @OneToMany(mappedBy = "idProducto")
     private Set<ProductoZona> productoZonas = new LinkedHashSet<>();
 
     public Integer getId() {
-        return idProducto;
+        return id;
     }
 
     public void setId(Integer id) {
-        this.idProducto = id;
+        this.id = id;
     }
 
     public String getNombre() {
@@ -70,6 +67,14 @@ public class Producto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
     public String getDescripcion() {
@@ -88,14 +93,6 @@ public class Producto {
         this.idCategoria = idCategoria;
     }
 
-    public Integer getCantidadDisponible() {
-        return cantidadDisponible;
-    }
-
-    public void setCantidadDisponible(Integer cantidadDisponible) {
-        this.cantidadDisponible = cantidadDisponible;
-    }
-
     public String getUbicacion() {
         return ubicacion;
     }
@@ -104,12 +101,28 @@ public class Producto {
         this.ubicacion = ubicacion;
     }
 
+    public Integer getCantidadDisponible() {
+        return cantidadDisponible;
+    }
+
+    public void setCantidadDisponible(Integer cantidadDisponible) {
+        this.cantidadDisponible = cantidadDisponible;
+    }
+
     public String getCodigoInterno() {
         return codigoInterno;
     }
 
     public void setCodigoInterno(String codigoInterno) {
         this.codigoInterno = codigoInterno;
+    }
+
+    public Proveedor getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(Proveedor idProveedor) {
+        this.idProveedor = idProveedor;
     }
 
     public Set<MovimientoProducto> getMovimientoProductos() {

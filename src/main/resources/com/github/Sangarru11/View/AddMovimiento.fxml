@@ -66,12 +66,24 @@
             <TableColumn fx:id="colCantidadAnad" prefWidth="120.6666259765625" text="Cantidad Añadida" />
          </columns>
       </TableView>
-      <Text layoutX="537.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destinatario: " wrappingWidth="139.33340962727863">
+      <Text layoutX="500.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destinatario: " wrappingWidth="139.33340962727863">
          <font>
             <Font name="Georgia" size="22.0" />
          </font>
       </Text>
-      <TextArea fx:id="txtDestinatario" layoutX="730.0" layoutY="128.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="167.0" />
       <ComboBox fx:id="comboBoxTipoMovimiento" layoutX="250.0" layoutY="107.0" prefHeight="40.0" prefWidth="167.0" />
+      <ComboBox fx:id="cmbTipoDestinatario" layoutX="666.0" layoutY="95.0" prefHeight="40.0" prefWidth="167.0" />
+      <Text layoutX="500.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre Destinatario:" wrappingWidth="139.33340962727863">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="cmbDestinatarioEntidad" layoutX="666.0" layoutY="173.0" prefHeight="40.0" prefWidth="167.0" />
+      <TextArea fx:id="txtDestinatario" layoutX="513.0" layoutY="237.0" prefHeight="40.0" prefWidth="127.0" />
+      <Text layoutX="374.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destinatario: " wrappingWidth="139.33340962727863">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

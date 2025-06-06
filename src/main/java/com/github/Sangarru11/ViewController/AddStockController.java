@@ -1,18 +1,11 @@
 package com.github.Sangarru11.ViewController;
 
-import com.github.Sangarru11.Model.DAO.CategoriaDAO;
-import com.github.Sangarru11.Model.DAO.ProductoDAO;
-import com.github.Sangarru11.Model.DAO.ProductoZonaDAO;
-import com.github.Sangarru11.Model.DAO.ZonaDAO;
-import com.github.Sangarru11.Model.Entity.Categoria;
-import com.github.Sangarru11.Model.Entity.Producto;
-import com.github.Sangarru11.Model.Entity.ProductoZona;
-import com.github.Sangarru11.Model.Entity.Zona;
+import com.github.Sangarru11.Model.DAO.*;
+import com.github.Sangarru11.Model.Entity.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -39,6 +32,9 @@ public class AddStockController extends Controller implements Initializable {
     private ImageView ImageViewProducto;
     @FXML
     private ComboBox<Zona> ComboBoxZona;
+    @FXML
+    private ComboBox<Proveedor> ProveedorComboBox;
+
 
     private byte[] fotoProducto;
 
@@ -55,6 +51,21 @@ public class AddStockController extends Controller implements Initializable {
             public Categoria fromString(String string) {
                 return ComboBoxCategoria.getItems().stream()
                         .filter(cat -> cat.getNombreCategoria().equals(string))
+                        .findFirst().orElse(null);
+            }
+        });
+
+        var proveedores = ProveedorDAO.build().findAll();
+        ProveedorComboBox.getItems().addAll(proveedores);
+        ProveedorComboBox.setConverter(new javafx.util.StringConverter<Proveedor>() {
+            @Override
+            public String toString(Proveedor proveedor) {
+                return proveedor != null ? proveedor.getNombreEmpresa() : "";
+            }
+            @Override
+            public Proveedor fromString(String string) {
+                return ProveedorComboBox.getItems().stream()
+                        .filter(p -> p.getNombreEmpresa().equals(string))
                         .findFirst().orElse(null);
             }
         });
@@ -110,9 +121,10 @@ public class AddStockController extends Controller implements Initializable {
             txtCodigoInterno.getText().trim().isEmpty() ||
             fotoProducto == null ||
             ComboBoxCategoria.getValue() == null ||
-            ComboBoxZona.getValue() == null) {
+            ComboBoxZona.getValue() == null ||
+            ProveedorComboBox.getValue() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Todos los campos son obligatorios, incluyendo la imagen y las selecciones de categoría y zona.");
+            alert.setContentText("Todos los campos son obligatorios, incluyendo la imagen, la categoría, la zona y el proveedor.");
             alert.show();
             return;
         }
@@ -134,6 +146,7 @@ public class AddStockController extends Controller implements Initializable {
         producto.setCantidadDisponible(cantidad);
         producto.setCodigoInterno(txtCodigoInterno.getText());
         producto.setFoto(fotoProducto);
+        producto.setIdProveedor(ProveedorComboBox.getValue());
 
         ProductoDAO.build().insert(producto);
 
@@ -159,6 +172,7 @@ public class AddStockController extends Controller implements Initializable {
         txtCodigoInterno.clear();
         ComboBoxCategoria.getSelectionModel().clearSelection();
         ComboBoxZona.getSelectionModel().clearSelection();
+        ProveedorComboBox.getSelectionModel().clearSelection();
         ImageViewProducto.setImage(null);
         fotoProducto = null;
     }
@@ -195,5 +209,14 @@ public class AddStockController extends Controller implements Initializable {
     @FXML
     private void GoToZonas() throws IOException{
         WelcomePageController.changeSceneToMain(Scenes.Zonas, null);
+    }
+    @FXML
+    private void GoToTecnicos() throws IOException {
+        WelcomePageController.changeSceneToMain(Scenes.Tecnicos, null);
+    }
+
+    @FXML
+    private void GoToProveedores() throws IOException {
+        WelcomePageController.changeSceneToMain(Scenes.Proveedores, null);
     }
 }

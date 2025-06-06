@@ -10,7 +10,7 @@ public class ProductoZona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_ProductoZona", nullable = false)
-    private Integer idProductoZona;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -23,11 +23,11 @@ public class ProductoZona {
     private Zona idZona;
 
     public Integer getId() {
-        return idProductoZona;
+        return id;
     }
 
     public void setId(Integer id) {
-        this.idProductoZona = id;
+        this.id = id;
     }
 
     public Producto getIdProducto() {

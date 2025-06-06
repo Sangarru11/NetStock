@@ -111,6 +111,36 @@
                   <Insets left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
             </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#GoToTecnicos" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="TECNICOS">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#GoToProveedores" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="PROVEEDORES">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
          </children>
       </VBox>
       <TableView fx:id="tableView" layoutX="307.0" layoutY="126.0" prefHeight="700.0" prefWidth="1250.0">
@@ -120,11 +150,11 @@
             <TableColumn fx:id="DescripcionProducto" editable="false" prefWidth="389.3332824707031" sortable="false" text="Descripcion" />
             <TableColumn fx:id="CategoriaProducto" editable="false" prefWidth="120.66668701171875" sortable="false" text="Categoria" />
             <TableColumn fx:id="CantidadProducto" editable="false" prefWidth="122.6666259765625" sortable="false" text="Cantidad Disponible" />
-            <TableColumn fx:id="ZonaProducto" editable="false" prefWidth="170.6666259765625" sortable="false" text="Zona" />
+            <TableColumn fx:id="ProveedorProducto" editable="false" prefWidth="170.6666259765625" sortable="false" text="Proveedor" />
             <TableColumn fx:id="CodigoInternoProducto" editable="false" prefWidth="276.0" sortable="false" text="Codigo Interno" />
         </columns>
       </TableView>
-      <HBox alignment="CENTER" layoutX="1219.0" layoutY="48.0" prefHeight="43.0" prefWidth="338.0" styleClass="rounded-pane">
+      <HBox alignment="CENTER" layoutX="1445.0" layoutY="836.0" onMouseClicked="#DeleteProducto" prefHeight="43.0" prefWidth="223.0" styleClass="rounded-pane">
          <children>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -134,7 +164,19 @@
                   <Insets right="5.0" />
                </HBox.margin>
             </ImageView>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Eliminar Producto Seleccionado">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Eliminar Producto">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+            </Text>
+         </children>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="1506.0" layoutY="41.0" onMouseClicked="#GoToReestock" prefHeight="43.0" prefWidth="100.0" styleClass="rounded-pane">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Reestock">
                <font>
                   <Font name="Georgia" size="20.0" />
                </font>

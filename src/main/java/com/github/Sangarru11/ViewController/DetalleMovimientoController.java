@@ -4,6 +4,7 @@ import com.github.Sangarru11.Model.Entity.Movimiento;
 import com.github.Sangarru11.Model.Entity.MovimientoProducto;
 import com.github.Sangarru11.Model.Entity.Producto;
 import com.github.Sangarru11.Model.Entity.ProductoZona;
+import com.github.Sangarru11.Model.Entity.Tecnico;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -52,7 +53,13 @@ public class DetalleMovimientoController extends Controller implements Initializ
     private void mostrarDatos() {
         if (movimiento != null && lblNombreMovimiento != null && lblDestinatario != null) {
             lblNombreMovimiento.setText(movimiento.getTipo());
-            lblDestinatario.setText(movimiento.getDestinatario() != null ? movimiento.getDestinatario() : "");
+            // Modificación aquí para mostrar el nombre del técnico
+            Tecnico tecnico = movimiento.getIdTecnico();
+            if (tecnico != null) {
+                lblDestinatario.setText(tecnico.getNombre() + (tecnico.getApellidos() != null ? " " + tecnico.getApellidos() : ""));
+            } else {
+                lblDestinatario.setText("N/A"); // O el texto que prefieras si no hay técnico
+            }
             ObservableList<Producto> productos = FXCollections.observableArrayList(
                 movimiento.getMovimientoProductos().stream()
                     .map(MovimientoProducto::getIdProducto)
@@ -61,6 +68,8 @@ public class DetalleMovimientoController extends Controller implements Initializ
             tableView.setItems(productos);
         } else if (movimiento == null && tableView != null) {
             tableView.setItems(FXCollections.observableArrayList());
+            if (lblNombreMovimiento != null) lblNombreMovimiento.setText("");
+            if (lblDestinatario != null) lblDestinatario.setText("");
         }
     }
 

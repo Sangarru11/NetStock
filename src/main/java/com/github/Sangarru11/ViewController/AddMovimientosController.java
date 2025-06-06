@@ -3,11 +3,10 @@ package com.github.Sangarru11.ViewController;
 import com.github.Sangarru11.Model.DAO.MovimientoDAO;
 import com.github.Sangarru11.Model.DAO.MovimientoProductoDAO;
 import com.github.Sangarru11.Model.DAO.ProductoDAO;
-import com.github.Sangarru11.Model.Entity.Movimiento;
-import com.github.Sangarru11.Model.Entity.MovimientoProducto;
-import com.github.Sangarru11.Model.Entity.MovimientoProductoId;
-import com.github.Sangarru11.Model.Entity.Producto;
-import com.github.Sangarru11.Model.Entity.Usuario;
+import com.github.Sangarru11.Model.DAO.TecnicoDAO;
+import com.github.Sangarru11.Model.DAO.ProveedorDAO;
+import com.github.Sangarru11.Model.DAO.ZonaDAO;
+import com.github.Sangarru11.Model.Entity.*;
 import com.github.Sangarru11.Utils.SessionManager;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -34,6 +34,8 @@ public class AddMovimientosController extends Controller implements Initializabl
 
     @FXML private ComboBox<String> comboBoxTipoMovimiento;
     @FXML private TextArea txtObservaciones;
+    @FXML private ComboBox<String> cmbTipoDestinatario;
+    @FXML private ComboBox<Object> cmbDestinatarioEntidad;
     @FXML private TextArea txtDestinatario;
 
     @FXML private TableView<Producto> tableViewProductosDisponibles;
@@ -50,6 +52,9 @@ public class AddMovimientosController extends Controller implements Initializabl
 
     private ObservableList<Producto> productosDisponibles;
     private ObservableList<ProductoMovimientoWrapper> productosAnadidosAlMovimiento;
+    private ObservableList<Tecnico> tecnicosDisponibles;
+    private ObservableList<Proveedor> proveedoresDisponibles;
+    private ObservableList<Zona> zonasDisponibles;
 
     private MovimientosController movimientosController;
 
@@ -59,55 +64,158 @@ public class AddMovimientosController extends Controller implements Initializabl
 
     @Override
     public Object onOpen(Object input) throws IOException {
-        cargarProductosDisponibles();
         return null;
     }
 
     @Override
-    public void onClose(Object output) {}
+    public void onClose(Object output) {
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         productosDisponibles = FXCollections.observableArrayList();
         productosAnadidosAlMovimiento = FXCollections.observableArrayList();
+        tecnicosDisponibles = FXCollections.observableArrayList();
+        proveedoresDisponibles = FXCollections.observableArrayList();
+        zonasDisponibles = FXCollections.observableArrayList();
+
         tableViewProductosDisponibles.setItems(productosDisponibles);
         tableViewProductosAnadidos.setItems(productosAnadidosAlMovimiento);
 
-        ObservableList<String> tiposMovimiento = FXCollections.observableArrayList("Salida", "Entrega");
+        cmbDestinatarioEntidad.setConverter(new StringConverter<Object>() {
+            @Override
+            public String toString(Object object) {
+                if (object instanceof Tecnico) {
+                    return ((Tecnico) object).getNombre() + " " + (((Tecnico) object).getApellidos() != null ? ((Tecnico) object).getApellidos() : "");
+                } else if (object instanceof Proveedor) {
+                    return ((Proveedor) object).getNombreEmpresa();
+                }
+                return null;
+            }
+
+            @Override
+            public Object fromString(String string) {
+                return null;
+            }
+        });
+
+        ObservableList<String> tiposMovimiento = FXCollections.observableArrayList("Entrega");
         comboBoxTipoMovimiento.setItems(tiposMovimiento);
+        if (!tiposMovimiento.isEmpty()) {
+            comboBoxTipoMovimiento.setValue(tiposMovimiento.get(0));
+        }
+
+
+        ObservableList<String> tiposDestinatario = FXCollections.observableArrayList("Técnico", "Proveedor");
+        cmbTipoDestinatario.setItems(tiposDestinatario);
+
+        comboBoxTipoMovimiento.valueProperty().addListener((obs, oldVal, newVal) -> actualizarVisibilidadYContenidoDestinatario());
+        cmbTipoDestinatario.valueProperty().addListener((obs, oldVal, newVal) -> actualizarVisibilidadYContenidoDestinatario());
 
         configurarTablaProductosDisponibles();
         configurarTablaProductosAnadidos();
+        cargarDatosIniciales();
+
+        actualizarVisibilidadYContenidoDestinatario();
+    }
+
+    private void cargarDatosIniciales() {
         cargarProductosDisponibles();
+        cargarTecnicos();
+        cargarProveedores();
+        cargarZonas();
+    }
+
+    private void actualizarVisibilidadYContenidoDestinatario() {
+        String tipoMovimiento = comboBoxTipoMovimiento.getValue();
+        boolean esModoEntrega = "Entrega".equals(tipoMovimiento);
+
+        txtDestinatario.setVisible(false);
+        txtDestinatario.setManaged(false);
+        txtDestinatario.clear();
+
+        cmbTipoDestinatario.setVisible(esModoEntrega);
+        cmbTipoDestinatario.setManaged(esModoEntrega);
+
+        cmbDestinatarioEntidad.setVisible(esModoEntrega);
+        cmbDestinatarioEntidad.setManaged(esModoEntrega);
+
+        if (esModoEntrega) {
+            String tipoDestinatarioSeleccionado = cmbTipoDestinatario.getValue();
+            if (tipoDestinatarioSeleccionado != null && !tipoDestinatarioSeleccionado.isEmpty()) {
+                poblarCmbDestinatarioEntidadParaEntrega(tipoDestinatarioSeleccionado);
+            } else {
+                cmbDestinatarioEntidad.getItems().clear();
+            }
+        } else {
+            cmbTipoDestinatario.getSelectionModel().clearSelection();
+            cmbDestinatarioEntidad.getItems().clear();
+            cmbDestinatarioEntidad.getSelectionModel().clearSelection();
+        }
+    }
+
+    private void poblarCmbDestinatarioEntidadParaEntrega(String tipoDestinatario) {
+        cmbDestinatarioEntidad.getItems().clear();
+        if ("Técnico".equals(tipoDestinatario)) {
+            cmbDestinatarioEntidad.setItems(FXCollections.observableArrayList(tecnicosDisponibles));
+        } else if ("Proveedor".equals(tipoDestinatario)) {
+            cmbDestinatarioEntidad.setItems(FXCollections.observableArrayList(proveedoresDisponibles));
+        }
+        cmbDestinatarioEntidad.getSelectionModel().clearSelection();
     }
 
     private void cargarProductosDisponibles() {
-        System.out.println("[DEBUG] AddMovimientosController.cargarProductosDisponibles() - INICIO");
-        ProductoDAO productoDAO = ProductoDAO.build();
-        List<Producto> productoList = productoDAO.findAll();
-
+        List<Producto> productoList = ProductoDAO.build().findAll();
         productosDisponibles.clear();
         if (productoList != null) {
-            for (Producto p : productoList) {
-                System.out.println("[DEBUG] Cargando producto disponible: " + p.getNombre() + ", Stock BD: " + (p.getCantidadDisponible() != null ? p.getCantidadDisponible() : "N/A"));
-                productosDisponibles.add(p);
-            }
+            productosDisponibles.addAll(productoList);
         }
         tableViewProductosDisponibles.refresh();
-        System.out.println("[DEBUG] AddMovimientosController.cargarProductosDisponibles() - FIN. Total productos cargados: " + productosDisponibles.size());
     }
 
+    private void cargarTecnicos() {
+        List<Tecnico> listaTecnicos = TecnicoDAO.build().findAll();
+        tecnicosDisponibles.clear();
+        if (listaTecnicos != null) {
+            tecnicosDisponibles.addAll(listaTecnicos);
+        }
+        if ("Entrega".equals(comboBoxTipoMovimiento.getValue()) && "Técnico".equals(cmbTipoDestinatario.getValue())) {
+            poblarCmbDestinatarioEntidadParaEntrega("Técnico");
+        }
+    }
+
+    private void cargarProveedores() {
+        List<Proveedor> listaProveedores = ProveedorDAO.build().findAll();
+        proveedoresDisponibles.clear();
+        if (listaProveedores != null) {
+            proveedoresDisponibles.addAll(listaProveedores);
+        }
+        if ("Entrega".equals(comboBoxTipoMovimiento.getValue()) && "Proveedor".equals(cmbTipoDestinatario.getValue())) {
+            poblarCmbDestinatarioEntidadParaEntrega("Proveedor");
+        }
+    }
+
+    private void cargarZonas() {
+        List<Zona> listaZonas = ZonaDAO.build().findAll();
+        zonasDisponibles.clear();
+        if (listaZonas != null) {
+            zonasDisponibles.addAll(listaZonas);
+        }
+    }
 
     private void configurarTablaProductosDisponibles() {
         colImagenDisp.setCellValueFactory(cellData -> {
             Producto producto = cellData.getValue();
             if (producto.getFoto() != null && producto.getFoto().length > 0) {
-                return new SimpleObjectProperty<>(new Image(new ByteArrayInputStream(producto.getFoto()), 50, 50, true, true));
+                try {
+                    return new SimpleObjectProperty<>(new Image(new ByteArrayInputStream(producto.getFoto()), 50, 50, true, true));
+                } catch (Exception e) {
+                    System.err.println("Error al cargar imagen del producto disponible: " + producto.getNombre() + " - " + e.getMessage());
+                }
             }
-            return new SimpleObjectProperty<>(null); // Imagen por defecto o nada
+            return new SimpleObjectProperty<>(null);
         });
         colImagenDisp.setCellFactory(col -> createImageCell());
-
         colNombreDisp.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         colDescripcionDisp.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescripcion()));
         colCantidadDisp.setCellValueFactory(cellData ->
@@ -115,7 +223,6 @@ public class AddMovimientosController extends Controller implements Initializabl
                         cellData.getValue().getCantidadDisponible() != null ? cellData.getValue().getCantidadDisponible().toString() : "0"
                 )
         );
-
         tableViewProductosDisponibles.setRowFactory(tv -> {
             TableRow<Producto> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -132,15 +239,29 @@ public class AddMovimientosController extends Controller implements Initializabl
         colImagenAnad.setCellValueFactory(cellData -> {
             Producto producto = cellData.getValue().getProducto();
             if (producto.getFoto() != null && producto.getFoto().length > 0) {
-                return new SimpleObjectProperty<>(new Image(new ByteArrayInputStream(producto.getFoto()), 50, 50, true, true));
+                try {
+                    return new SimpleObjectProperty<>(new Image(new ByteArrayInputStream(producto.getFoto()), 50, 50, true, true));
+                } catch (Exception e) {
+                    System.err.println("Error al cargar imagen del producto añadido: " + producto.getNombre() + " - " + e.getMessage());
+                }
             }
             return new SimpleObjectProperty<>(null);
         });
         colImagenAnad.setCellFactory(col -> createImageCell());
-
         colNombreAnad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProducto().getNombre()));
         colDescripcionAnad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProducto().getDescripcion()));
         colCantidadAnad.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCantidadSuministrada())));
+
+        tableViewProductosAnadidos.setRowFactory(tv -> {
+            TableRow<ProductoMovimientoWrapper> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    ProductoMovimientoWrapper wrapperSeleccionado = row.getItem();
+                    abrirDialogoCantidad(wrapperSeleccionado.getProducto());
+                }
+            });
+            return row;
+        });
     }
 
     private <T> TableCell<T, Image> createImageCell() {
@@ -150,49 +271,43 @@ public class AddMovimientosController extends Controller implements Initializabl
                 imageView.setFitHeight(50);
                 imageView.setFitWidth(50);
                 imageView.setPreserveRatio(true);
-                setGraphic(imageView);
-                setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-                setAlignment(javafx.geometry.Pos.CENTER);
             }
             @Override
             protected void updateItem(Image item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
-                    imageView.setImage(null);
+                    setGraphic(null);
                 } else {
                     imageView.setImage(item);
+                    setGraphic(imageView);
                 }
             }
         };
     }
 
     private void abrirDialogoCantidad(Producto productoSeleccionadoOriginal) {
-        System.out.println("[DEBUG] abrirDialogoCantidad para: " + productoSeleccionadoOriginal.getNombre() +
-                ", Stock visual actual: " + (productoSeleccionadoOriginal.getCantidadDisponible() != null ? productoSeleccionadoOriginal.getCantidadDisponible() : "N/A"));
-
         Optional<ProductoMovimientoWrapper> optWrapperExistente = productosAnadidosAlMovimiento.stream()
                 .filter(pmw -> pmw.getProducto().getId().equals(productoSeleccionadoOriginal.getId()))
                 .findFirst();
 
-        int cantidadPreviamenteEnWrapper = 0;
-        if (optWrapperExistente.isPresent()) {
-            cantidadPreviamenteEnWrapper = optWrapperExistente.get().getCantidadSuministrada();
-            System.out.println("[DEBUG] Producto ya existe en la lista de añadidos con cantidad: " + cantidadPreviamenteEnWrapper);
-        }
+        int cantidadPreviamenteEnWrapper = optWrapperExistente.map(ProductoMovimientoWrapper::getCantidadSuministrada).orElse(0);
 
-        int stockVisualActual = productoSeleccionadoOriginal.getCantidadDisponible() != null ? productoSeleccionadoOriginal.getCantidadDisponible() : 0;
-        int stockBaseParaCalculo = stockVisualActual + cantidadPreviamenteEnWrapper;
-        System.out.println("[DEBUG] Stock base para cálculo (visual actual + previa en wrapper): " + stockBaseParaCalculo);
+        Producto productoEnTablaDisponibles = productosDisponibles.stream()
+            .filter(p -> p.getId().equals(productoSeleccionadoOriginal.getId()))
+            .findFirst()
+            .orElse(productoSeleccionadoOriginal);
 
+        int stockVisualActual = productoEnTablaDisponibles.getCantidadDisponible() != null ? productoEnTablaDisponibles.getCantidadDisponible() : 0;
 
         TextInputDialog dialog = new TextInputDialog(String.valueOf(cantidadPreviamenteEnWrapper > 0 ? cantidadPreviamenteEnWrapper : 1));
         dialog.setTitle("Introducir Cantidad");
         dialog.setHeaderText("Añadir '" + productoSeleccionadoOriginal.getNombre() + "' al movimiento.");
-        dialog.setContentText("Cantidad a suministrar (Total disponible original para este movimiento: " + stockBaseParaCalculo + "):");
+        dialog.setContentText("Cantidad a suministrar (Disponible actual: " + stockVisualActual + "):");
 
-        final Pattern intPattern = Pattern.compile("\\d*");
+        final Pattern intPattern = Pattern.compile("\\d+");
         dialog.getEditor().setTextFormatter(new TextFormatter<>(change -> {
-            if (intPattern.matcher(change.getControlNewText()).matches()) {
+            String newText = change.getControlNewText();
+            if (newText.isEmpty() || (intPattern.matcher(newText).matches() && Integer.parseInt(newText) >= 0)) {
                 return change;
             }
             return null;
@@ -200,53 +315,57 @@ public class AddMovimientosController extends Controller implements Initializabl
 
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(cantidadStr -> {
+            if (cantidadStr.isEmpty()) return;
             try {
-                int cantidadIntroducida = Integer.parseInt(cantidadStr);
-                System.out.println("[DEBUG] Cantidad introducida en diálogo: " + cantidadIntroducida);
-
-                if (cantidadIntroducida <= 0) {
-                    mostrarAlerta(Alert.AlertType.WARNING, "Cantidad Inválida", "La cantidad debe ser mayor que cero.");
+                int cantidadValida = Integer.parseInt(cantidadStr);
+                if (cantidadValida < 0) {
+                    mostrarAlerta(Alert.AlertType.ERROR, "Cantidad Inválida", "La cantidad no puede ser negativa.");
                     return;
                 }
 
-                if (cantidadIntroducida > stockBaseParaCalculo) {
-                    mostrarAlerta(Alert.AlertType.WARNING, "Stock Insuficiente",
-                            "La cantidad solicitada (" + cantidadIntroducida +
-                                    ") excede el stock disponible original para este movimiento (" + stockBaseParaCalculo + ").");
+                int maxCantidadPermitida = stockVisualActual + cantidadPreviamenteEnWrapper;
+
+                if (cantidadValida > maxCantidadPermitida) {
+                    mostrarAlerta(Alert.AlertType.ERROR, "Cantidad Excesiva",
+                            "No puede suministrar más de " + maxCantidadPermitida + " unidades (Stock actual: " + stockVisualActual +
+                            (cantidadPreviamenteEnWrapper > 0 ? ", ya añadido: " + cantidadPreviamenteEnWrapper : "") + ").");
                     return;
                 }
 
-                int stockVisualRestante = stockBaseParaCalculo - cantidadIntroducida;
+                int diferenciaTransferida = cantidadValida - cantidadPreviamenteEnWrapper;
 
                 if (optWrapperExistente.isPresent()) {
-                    ProductoMovimientoWrapper wrapperExistente = optWrapperExistente.get();
-                    wrapperExistente.setCantidadSuministrada(cantidadIntroducida);
-                    System.out.println("[DEBUG] Wrapper existente actualizado con cantidad: " + cantidadIntroducida);
+                    if (cantidadValida == 0) {
+                        productosAnadidosAlMovimiento.remove(optWrapperExistente.get());
+                    } else {
+                        optWrapperExistente.get().setCantidadSuministrada(cantidadValida);
+                    }
                 } else {
-                    productosAnadidosAlMovimiento.add(new ProductoMovimientoWrapper(productoSeleccionadoOriginal, cantidadIntroducida));
-                    System.out.println("[DEBUG] Nuevo wrapper añadido con cantidad: " + cantidadIntroducida);
+                    if (cantidadValida > 0) {
+                        productosAnadidosAlMovimiento.add(new ProductoMovimientoWrapper(productoEnTablaDisponibles, cantidadValida));
+                    } else {
+                        tableViewProductosAnadidos.refresh();
+                        tableViewProductosDisponibles.refresh();
+                        return;
+                    }
                 }
-
-                productoSeleccionadoOriginal.setCantidadDisponible(stockVisualRestante);
-                System.out.println("[DEBUG] Stock visual actualizado para '" + productoSeleccionadoOriginal.getNombre() + "' a: " + stockVisualRestante);
-
-                tableViewProductosDisponibles.refresh();
                 tableViewProductosAnadidos.refresh();
 
+                productoEnTablaDisponibles.setCantidadDisponible(stockVisualActual - diferenciaTransferida);
+                tableViewProductosDisponibles.refresh(); // Actualiza la tabla de disponibles
+
             } catch (NumberFormatException e) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error de Formato", "Por favor, introduce un número válido.");
+                mostrarAlerta(Alert.AlertType.ERROR, "Entrada Inválida", "Por favor, introduzca un número válido.");
             }
         });
     }
 
     @FXML
     public void addMovimiento() {
-        System.out.println("[DEBUG] AddMovimientosController.addMovimiento() - INICIO");
-        String tipo = comboBoxTipoMovimiento.getValue(); // Obtener valor del ComboBox
-        String observaciones = txtObservaciones.getText().trim();
-        String destinatario = txtDestinatario.getText().trim();
+        String tipo = comboBoxTipoMovimiento.getValue();
+        String observacionesInput = txtObservaciones.getText().trim();
 
-        if (tipo == null || tipo.isEmpty()) { // Comprobar si se seleccionó un tipo
+        if (tipo == null || tipo.isEmpty()) {
             mostrarAlerta(Alert.AlertType.ERROR, "Campo Requerido", "Por favor, seleccione un tipo de movimiento.");
             return;
         }
@@ -254,29 +373,48 @@ public class AddMovimientosController extends Controller implements Initializabl
             mostrarAlerta(Alert.AlertType.WARNING, "Sin Productos", "Debe añadir al menos un producto al movimiento.");
             return;
         }
-
         Usuario usuarioLogueado = SessionManager.getUsuarioLogueado();
         if (usuarioLogueado == null) {
             mostrarAlerta(Alert.AlertType.ERROR, "Error de Sesión", "No se pudo obtener el usuario logueado. Por favor, inicie sesión de nuevo.");
             return;
         }
-        System.out.println("[DEBUG] Usuario logueado: " + usuarioLogueado.getNombreUsuario());
 
         Movimiento movimiento = new Movimiento();
         movimiento.setTipo(tipo);
-        movimiento.setObservaciones(observaciones);
-        movimiento.setDestinatario(destinatario.isEmpty() ? null : destinatario);
         movimiento.setFecha(Instant.now());
         movimiento.setIdUsuario(usuarioLogueado);
+        String observacionesCompletas = observacionesInput;
+        Object destinatarioObj = cmbDestinatarioEntidad.getValue();
 
-        MovimientoDAO movimientoDAO = MovimientoDAO.build();
-        System.out.println("[DEBUG] Intentando insertar movimiento: Tipo=" + tipo + ", UsuarioID=" + usuarioLogueado.getId());
-        if (!movimientoDAO.insert(movimiento) || movimiento.getId() == null) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error al Guardar", "No se pudo guardar el movimiento en la base de datos.");
-            System.out.println("[ERROR] Falla al insertar movimiento o ID es null.");
+        if ("Entrega".equals(tipo)) {
+            String tipoDestinatario = cmbTipoDestinatario.getValue();
+            if (tipoDestinatario == null || tipoDestinatario.isEmpty()) {
+                mostrarAlerta(Alert.AlertType.ERROR, "Campo Requerido", "Por favor, seleccione un tipo de destinatario.");
+                return;
+            }
+            if (destinatarioObj == null) {
+                mostrarAlerta(Alert.AlertType.ERROR, "Campo Requerido", "Por favor, seleccione el nombre del destinatario.");
+                return;
+            }
+
+            String nombreDestinatarioParaObs = "";
+            if (destinatarioObj instanceof Tecnico) {
+                movimiento.setIdTecnico((Tecnico) destinatarioObj);
+                nombreDestinatarioParaObs = ((Tecnico) destinatarioObj).getNombre() + " " + (((Tecnico) destinatarioObj).getApellidos() != null ? ((Tecnico) destinatarioObj).getApellidos() : "");
+            } else if (destinatarioObj instanceof Proveedor) {
+                // La entidad Movimiento no tiene campo para Proveedor directamente.
+                // Se incluye en observaciones.
+                nombreDestinatarioParaObs = ((Proveedor) destinatarioObj).getNombreEmpresa();
+            }
+            observacionesCompletas = "Destino: " + tipoDestinatario + " - " + nombreDestinatarioParaObs +
+                                    (observacionesInput.isEmpty() ? "" : ". Observaciones: " + observacionesInput);
+        }
+        movimiento.setObservaciones(observacionesCompletas.isEmpty() ? null : observacionesCompletas);
+
+        if (!MovimientoDAO.build().insert(movimiento) || movimiento.getId() == null) {
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al Guardar", "No se pudo guardar el movimiento principal en la base de datos.");
             return;
         }
-        System.out.println("[DEBUG] Movimiento insertado con ID: " + movimiento.getId());
 
         MovimientoProductoDAO mpDAO = MovimientoProductoDAO.build();
         ProductoDAO productoDAO = ProductoDAO.build();
@@ -284,17 +422,16 @@ public class AddMovimientosController extends Controller implements Initializabl
 
         for (ProductoMovimientoWrapper pmw : productosAnadidosAlMovimiento) {
             Producto productoOriginalDelWrapper = pmw.getProducto();
-            System.out.println("[DEBUG] Procesando producto para MovimientoProducto: " + productoOriginalDelWrapper.getNombre() + ", ID: " + productoOriginalDelWrapper.getId() + ", Cantidad en wrapper: " + pmw.getCantidadSuministrada());
-
             Producto productoParaActualizarBD = productoDAO.findById(productoOriginalDelWrapper.getId());
-            if (productoParaActualizarBD == null) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error de Producto", "No se encontró el producto " + productoOriginalDelWrapper.getNombre() + " en la base de datos.");
-                todosProductosProcesadosCorrectamente = false;
-                System.out.println("[ERROR] Producto no encontrado en BD: ID=" + productoOriginalDelWrapper.getId());
-                break;
-            }
-            System.out.println("[DEBUG] Producto '" + productoParaActualizarBD.getNombre() + "' obtenido de BD. Stock actual BD: " + (productoParaActualizarBD.getCantidadDisponible() != null ? productoParaActualizarBD.getCantidadDisponible() : "N/A"));
 
+            if (productoParaActualizarBD == null) {
+                mostrarAlerta(Alert.AlertType.ERROR, "Error de Datos", "No se encontró el producto " + productoOriginalDelWrapper.getNombre() + " en la base de datos para actualizar stock.");
+                todosProductosProcesadosCorrectamente = false;
+                continue;
+            }
+
+            int cantidadSuministradaEnMovimiento = pmw.getCantidadSuministrada();
+            int stockActualEnBD = productoParaActualizarBD.getCantidadDisponible() != null ? productoParaActualizarBD.getCantidadDisponible() : 0;
 
             MovimientoProducto mp = new MovimientoProducto();
             MovimientoProductoId mpId = new MovimientoProductoId();
@@ -303,84 +440,52 @@ public class AddMovimientosController extends Controller implements Initializabl
             mp.setId(mpId);
             mp.setIdMovimiento(movimiento);
             mp.setIdProducto(productoParaActualizarBD);
-            mp.setCantidad(pmw.getCantidadSuministrada());
+            mp.setCantidad(cantidadSuministradaEnMovimiento);
 
-            System.out.println("[DEBUG] Intentando insertar MovimientoProducto: MovID=" + movimiento.getId() + ", ProdID=" + productoParaActualizarBD.getId() + ", Cantidad=" + pmw.getCantidadSuministrada());
             if (!mpDAO.insert(mp)) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Error al Guardar", "No se pudo guardar el detalle del producto " + productoParaActualizarBD.getNombre() + " para el movimiento.");
+                mostrarAlerta(Alert.AlertType.ERROR, "Error al Guardar", "No se pudo guardar el detalle del producto " + productoParaActualizarBD.getNombre() + " en el movimiento.");
                 todosProductosProcesadosCorrectamente = false;
-                System.out.println("[ERROR] Falla al insertar MovimientoProducto para ProdID: " + productoParaActualizarBD.getId());
-                break;
+                continue;
             }
-            System.out.println("[DEBUG] MovimientoProducto insertado correctamente para ProdID: " + productoParaActualizarBD.getId());
 
-            int cantidadSuministradaEnMovimiento = pmw.getCantidadSuministrada();
-            int stockActualEnBD = productoParaActualizarBD.getCantidadDisponible() != null ? productoParaActualizarBD.getCantidadDisponible() : 0;
-            String tipoNormalizado = tipo.toLowerCase();
             int nuevoStockCalculadoParaBD = stockActualEnBD;
-
-            if (tipoNormalizado.contains("salida") || tipoNormalizado.contains("transferencia") || tipoNormalizado.contains("entrega")) {
+            if ("Entrega".equalsIgnoreCase(tipo)) {
                 nuevoStockCalculadoParaBD = stockActualEnBD - cantidadSuministradaEnMovimiento;
-                System.out.println("[INFO] Tipo '" + tipo + "' reduce stock. Stock anterior: " + stockActualEnBD + ", Cantidad: " + cantidadSuministradaEnMovimiento + ", Nuevo stock: " + nuevoStockCalculadoParaBD);
-            } else if (tipoNormalizado.contains("entrada") || tipoNormalizado.contains("devolución") || tipoNormalizado.contains("recepción") || tipoNormalizado.contains("devolucion")) {
-                nuevoStockCalculadoParaBD = stockActualEnBD + cantidadSuministradaEnMovimiento;
-                System.out.println("[INFO] Tipo '" + tipo + "' aumenta stock. Stock anterior: " + stockActualEnBD + ", Cantidad: " + cantidadSuministradaEnMovimiento + ", Nuevo stock: " + nuevoStockCalculadoParaBD);
-            } else {
-                System.out.println("[INFO] Tipo de movimiento '" + tipo + "' no afecta el stock para " + productoParaActualizarBD.getNombre());
             }
 
-            if (nuevoStockCalculadoParaBD != stockActualEnBD ||
-                tipoNormalizado.contains("salida") || tipoNormalizado.contains("transferencia") || tipoNormalizado.contains("entrega") ||
-                tipoNormalizado.contains("entrada") || tipoNormalizado.contains("devolución") || tipoNormalizado.contains("recepción") || tipoNormalizado.contains("devolucion")) {
-
-                productoParaActualizarBD.setCantidadDisponible(nuevoStockCalculadoParaBD);
-                System.out.println("[DEBUG] Intentando actualizar stock en BD para '" + productoParaActualizarBD.getNombre() + "' a " + nuevoStockCalculadoParaBD);
-                if (productoDAO.update(productoParaActualizarBD)) {
-                    System.out.println("[DEBUG] Stock actualizado en BD para '" + productoParaActualizarBD.getNombre() + "'. Verificando...");
-                    Producto productoVerificado = productoDAO.findById(productoParaActualizarBD.getId());
-                    if (productoVerificado != null && productoVerificado.getCantidadDisponible() != null && productoVerificado.getCantidadDisponible() == nuevoStockCalculadoParaBD) {
-                        System.out.println("[VERIFY] Stock para '" + productoVerificado.getNombre() + "' verificado en BD: " + productoVerificado.getCantidadDisponible());
-                    } else {
-                        System.out.println("[VERIFY ERROR] Discrepancia en verificación de stock para '" + productoParaActualizarBD.getNombre() + "'. Esperado: " + nuevoStockCalculadoParaBD + ", Encontrado: " + (productoVerificado != null && productoVerificado.getCantidadDisponible() != null ? productoVerificado.getCantidadDisponible() : "N/A"));
-                        mostrarAlerta(Alert.AlertType.WARNING, "Verificación de Stock", "El stock para " + productoParaActualizarBD.getNombre() + " podría no haberse actualizado correctamente en la BD.");
-                    }
-                } else {
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error de Actualización", "No se pudo actualizar el stock para " + productoParaActualizarBD.getNombre() + " en la base de datos.");
-                    todosProductosProcesadosCorrectamente = false;
-                    System.out.println("[ERROR] Falla al actualizar stock en BD para ProdID: " + productoParaActualizarBD.getId());
-                    break;
-                }
-            } else {
-                System.out.println("[DEBUG] No se requiere actualización de stock para '" + productoParaActualizarBD.getNombre() + "' (stock no cambiado o tipo no reconocido para actualización).");
+            productoParaActualizarBD.setCantidadDisponible(nuevoStockCalculadoParaBD);
+            if (!productoDAO.update(productoParaActualizarBD)) {
+                mostrarAlerta(Alert.AlertType.ERROR, "Error al Actualizar", "No se pudo actualizar el stock del producto " + productoParaActualizarBD.getNombre() + ".");
+                todosProductosProcesadosCorrectamente = false;
             }
         }
 
         if (todosProductosProcesadosCorrectamente) {
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Movimiento y actualización de stock realizados correctamente.");
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Movimiento registrado y stock actualizado correctamente.");
+            limpiarFormulario();
+            if (movimientosController != null) {
+                movimientosController.recargarMovimientos();
+            }
+            Stage stage = (Stage) comboBoxTipoMovimiento.getScene().getWindow();
+            stage.close();
         } else {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error Parcial", "Algunos productos o el stock no pudieron ser procesados/actualizados correctamente. Revise la consola para más detalles.");
+            mostrarAlerta(Alert.AlertType.WARNING, "Proceso Incompleto", "Algunos productos o el stock no se procesaron correctamente. Revise los movimientos y el stock.");
         }
-
-        if (movimientosController != null) {
-            movimientosController.recargarMovimientos();
-            System.out.println("[DEBUG] Llamado a recargarMovimientos() en MovimientosController.");
-        }
-
-        limpiarFormulario();
-        cargarProductosDisponibles();
-
-        Stage stage = (Stage) comboBoxTipoMovimiento.getScene().getWindow();
-        stage.close();
-        System.out.println("[DEBUG] AddMovimientosController.addMovimiento() - FIN");
     }
 
     private void limpiarFormulario() {
-        comboBoxTipoMovimiento.setValue(null);
+        if (!comboBoxTipoMovimiento.getItems().isEmpty()) {
+            comboBoxTipoMovimiento.setValue(comboBoxTipoMovimiento.getItems().get(0));
+        } else {
+            comboBoxTipoMovimiento.getSelectionModel().clearSelection();
+        }
+        cmbTipoDestinatario.getSelectionModel().clearSelection();
+        cmbDestinatarioEntidad.getSelectionModel().clearSelection();
         txtObservaciones.clear();
-        txtDestinatario.clear();
         productosAnadidosAlMovimiento.clear();
         tableViewProductosAnadidos.refresh();
-        System.out.println("[DEBUG] Formulario limpiado.");
+        actualizarVisibilidadYContenidoDestinatario();
+        cargarProductosDisponibles();
     }
 
     private void mostrarAlerta(Alert.AlertType tipo, String titulo, String contenido) {
@@ -399,18 +504,9 @@ public class AddMovimientosController extends Controller implements Initializabl
             this.producto = producto;
             this.cantidadSuministrada = cantidadSuministrada;
         }
-
-        public Producto getProducto() {
-            return producto;
-        }
-
-        public int getCantidadSuministrada() {
-            return cantidadSuministrada;
-        }
-
-        public void setCantidadSuministrada(int cantidadSuministrada) {
-            this.cantidadSuministrada = cantidadSuministrada;
-        }
+        public Producto getProducto() { return producto; }
+        public int getCantidadSuministrada() { return cantidadSuministrada; }
+        public void setCantidadSuministrada(int cantidadSuministrada) { this.cantidadSuministrada = cantidadSuministrada; }
 
         @Override
         public boolean equals(Object o) {
@@ -419,10 +515,7 @@ public class AddMovimientosController extends Controller implements Initializabl
             ProductoMovimientoWrapper that = (ProductoMovimientoWrapper) o;
             return Objects.equals(producto.getId(), that.producto.getId());
         }
-
         @Override
-        public int hashCode() {
-            return Objects.hash(producto.getId());
-        }
+        public int hashCode() { return Objects.hash(producto.getId()); }
     }
 }

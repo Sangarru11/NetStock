@@ -109,6 +109,36 @@
                   <Insets left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
             </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#GoToTecnicos" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="TECNICOS">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#GoToProveedores" prefHeight="43.0" prefWidth="167.0" styleClass="rounded-pane">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="PROVEEDORES">
+                     <font>
+                        <Font name="Georgia" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
          </children>
       </VBox>
       <TableView fx:id="tableView" layoutX="307.0" layoutY="126.0" prefHeight="700.0" prefWidth="1250.0">

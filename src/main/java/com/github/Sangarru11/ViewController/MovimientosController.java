@@ -140,6 +140,16 @@ public class MovimientosController extends Controller implements Initializable {
     private void GoToZonas() throws IOException{
         WelcomePageController.changeSceneToMain(Scenes.Zonas, null);
     }
+    @FXML
+    private void GoToTecnicos() throws IOException {
+        WelcomePageController.changeSceneToMain(Scenes.Tecnicos, null);
+    }
+
+    @FXML
+    private void GoToProveedores() throws IOException {
+        WelcomePageController.changeSceneToMain(Scenes.Proveedores, null);
+    }
+
     public void recargarMovimientos() {
         List<Movimiento> movimientoList = MovimientoDAO.build().findAll();
         this.movimientos.setAll(movimientoList);
