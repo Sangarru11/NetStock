@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="663.0" stylesheets="@css/MainPage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.Sangarru11.ViewController.AddProveedorController">
+   <children>
+      <Text layoutX="191.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Añadir Proveedor">
+         <font>
+            <Font name="Georgia" size="36.0" />
+         </font>
+      </Text>
+      <Text layoutX="144.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre Empresa" wrappingWidth="181.3334019978841">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtNombreEmpresa" layoutX="374.0" layoutY="119.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="167.0" />
+      <HBox alignment="CENTER" layoutX="241.0" layoutY="314.0" onMouseClicked="#addProveedor" prefHeight="43.0" prefWidth="181.0" styleClass="rounded-pane">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Añadir Proveedor">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+      <Text layoutX="58.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre Contacto Empresa" wrappingWidth="270.47460937500006">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtNombreContacto" layoutX="374.0" layoutY="158.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="167.0" />
+      <Text layoutX="235.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Telefono" wrappingWidth="91.33340962727863">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtTelefono" layoutX="374.0" layoutY="202.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="167.0" />
+      <Text layoutX="259.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="60.666707356770814">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtEmail" layoutX="374.0" layoutY="242.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="167.0" />
+   </children>
+</AnchorPane>

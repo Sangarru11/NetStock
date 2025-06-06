@@ -15,7 +15,7 @@ public class Movimiento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_movimiento", nullable = false)
-    private Integer idMovimiento;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
@@ -34,18 +34,20 @@ public class Movimiento {
     @Column(name = "observaciones")
     private String observaciones;
 
-    @Column(name = "destinatario", nullable = false, length = 50)
-    private String destinatario;
+    @ManyToOne(fetch = FetchType.EAGER) // <-- Cambiado de LAZY a EAGER
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JoinColumn(name = "id_tecnico")
+    private Tecnico idTecnico;
 
     @OneToMany(mappedBy = "idMovimiento")
     private Set<MovimientoProducto> movimientoProductos = new LinkedHashSet<>();
 
     public Integer getId() {
-        return idMovimiento;
+        return id;
     }
 
     public void setId(Integer id) {
-        this.idMovimiento = id;
+        this.id = id;
     }
 
     public Usuario getIdUsuario() {
@@ -76,16 +78,16 @@ public class Movimiento {
         return observaciones;
     }
 
-    public String getDestinatario() {
-        return destinatario;
-    }
-
-    public void setDestinatario(String destinatario) {
-        this.destinatario = destinatario;
-    }
-
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public Tecnico getIdTecnico() {
+        return idTecnico;
+    }
+
+    public void setIdTecnico(Tecnico idTecnico) {
+        this.idTecnico = idTecnico;
     }
 
     public Set<MovimientoProducto> getMovimientoProductos() {

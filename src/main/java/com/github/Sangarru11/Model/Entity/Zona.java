@@ -11,7 +11,7 @@ public class Zona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_zona", nullable = false)
-    private Integer idZona;
+    private Integer id;
 
     @Column(name = "nombre_zona", length = 100)
     private String nombreZona;
@@ -23,11 +23,11 @@ public class Zona {
     private Set<ProductoZona> productoZonas = new LinkedHashSet<>();
 
     public Integer getId() {
-        return idZona;
+        return id;
     }
 
     public void setId(Integer id) {
-        this.idZona = id;
+        this.id = id;
     }
 
     public String getNombreZona() {

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TextArea?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/MainPage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.Sangarru11.ViewController.AddTecnicosController">
+   <children>
+      <Text layoutX="179.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Añadir Tecnico">
+         <font>
+            <Font name="Georgia" size="36.0" />
+         </font>
+      </Text>
+      <Text layoutX="158.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" wrappingWidth="84.66667683919269">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtNombreTecnico" layoutX="300.0" layoutY="89.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="167.0" />
+      <HBox alignment="CENTER" layoutX="209.0" layoutY="318.0" onMouseClicked="#addTecnico" prefHeight="43.0" prefWidth="181.0" styleClass="rounded-pane">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Añadir Tecnico">
+               <font>
+                  <Font name="Georgia" size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+      <Text layoutX="158.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apellido" wrappingWidth="84.66667683919275">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtApellidosTecnico" layoutX="300.0" layoutY="128.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="167.0" />
+      <Text layoutX="203.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dni" wrappingWidth="40.00009663899738">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtDniTecnico" layoutX="300.0" layoutY="172.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="167.0" />
+      <Text layoutX="155.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Telefono" wrappingWidth="90.66670735677081">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtTelefonoTecnico" layoutX="300.0" layoutY="212.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="167.0" />
+      <Text layoutX="182.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="60.666707356770814">
+         <font>
+            <Font name="Georgia" size="22.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="txtEmailTecnico" layoutX="300.0" layoutY="252.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="167.0" />
+   </children>
+</AnchorPane>

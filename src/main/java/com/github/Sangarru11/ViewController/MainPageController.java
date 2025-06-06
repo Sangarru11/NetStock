@@ -177,5 +177,16 @@ public class MainPageController extends Controller implements Initializable {
     private void GoToLogin() throws IOException{
         WelcomePageController.changeSceneToMain(Scenes.WelcomePage, null);
     }
+    @FXML
+    private void GoToTecnicos() throws IOException {
+        WelcomePageController.changeSceneToMain(Scenes.Tecnicos, null);
+    }
+
+    @FXML
+    private void GoToProveedores() throws IOException {
+        WelcomePageController.changeSceneToMain(Scenes.Proveedores, null);
+    }
+
+
 
 }

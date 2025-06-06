@@ -80,6 +80,15 @@ public class CategoriasController extends Controller implements Initializable {
         WelcomePageController.changeSceneToMain(Scenes.Zonas, null);
     }
     @FXML
+    private void GoToTecnicos() throws IOException {
+        WelcomePageController.changeSceneToMain(Scenes.Tecnicos, null);
+    }
+
+    @FXML
+    private void GoToProveedores() throws IOException {
+        WelcomePageController.changeSceneToMain(Scenes.Proveedores, null);
+    }
+    @FXML
     private void GoToAddCategoria() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/github/Sangarru11/View/AddCategoria.fxml"));
         Parent root = loader.load();

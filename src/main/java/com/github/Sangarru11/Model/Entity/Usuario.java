@@ -12,7 +12,7 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario", nullable = false)
-    private Integer idUsuario;
+    private Integer id;
 
     @Column(name = "nombre_usuario", nullable = false, length = 100)
     private String nombreUsuario;
@@ -29,11 +29,11 @@ public class Usuario {
     private Set<Movimiento> movimientos = new LinkedHashSet<>();
 
     public Integer getId() {
-        return idUsuario;
+        return id;
     }
 
     public void setId(Integer id) {
-        this.idUsuario = id;
+        this.id = id;
     }
 
     public String getNombreUsuario() {

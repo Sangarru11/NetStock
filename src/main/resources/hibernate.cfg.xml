@@ -20,6 +20,8 @@
         <property name="hibernate.format_sql">true</property>
 
         <mapping class="com.github.Sangarru11.Model.Entity.Categoria"/>
+        <mapping class="com.github.Sangarru11.Model.Entity.Proveedor"/>
+        <mapping class="com.github.Sangarru11.Model.Entity.Tecnico"/>
         <mapping class="com.github.Sangarru11.Model.Entity.Movimiento"/>
         <mapping class="com.github.Sangarru11.Model.Entity.MovimientoProducto"/>
         <mapping class="com.github.Sangarru11.Model.Entity.MovimientoProductoId"/>

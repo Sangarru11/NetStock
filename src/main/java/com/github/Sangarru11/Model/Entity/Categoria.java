@@ -11,7 +11,7 @@ public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_categoria", nullable = false)
-    private Integer idCategoria;
+    private Integer id;
 
     @Column(name = "nombre_categoria", nullable = false, length = 100)
     private String nombreCategoria;
@@ -20,11 +20,11 @@ public class Categoria {
     private Set<Producto> productos = new LinkedHashSet<>();
 
     public Integer getId() {
-        return idCategoria;
+        return id;
     }
 
     public void setId(Integer id) {
-        this.idCategoria = id;
+        this.id = id;
     }
 
     public String getNombreCategoria() {
